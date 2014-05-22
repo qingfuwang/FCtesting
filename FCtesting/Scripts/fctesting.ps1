@@ -17,7 +17,6 @@ cd C:\DeploymentScripts_FC123_withPdu
 $nodeip=$Matches[1]
  net use /DELETE \\$nodeip
  net use \\$nodeip /user:rdTestUser rdPaSSw0rd!!
-write-host "ip: $nodeip"
  if(-not $LASTEXITCODE -eq 0)
 {
  while($waitReady-- -gt 0)
