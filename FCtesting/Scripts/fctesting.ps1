@@ -42,5 +42,5 @@ Set-Content -Value $tests .\temp_data.csv
 
 $results=dir $linuxagentpath\log |Sort-Object -Property LastWriteTime -Descending
 $result=($results[0],$results[1])|Sort-Object -Property Length
-cp -force $results[0] $linuxagentpath\log\summary.log
-cp -force $results[1] $linuxagentpath\log\test.log
+cp -force $results[0].fullname $linuxagentpath\log\summary.log
+cp -force $results[1].fullname $linuxagentpath\log\test.log
