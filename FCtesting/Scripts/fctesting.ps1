@@ -1,6 +1,6 @@
 ﻿$linuxagentpath=$args[0]
 $distro=$args[1]
-
+$password=$args[2]
 echo "linuxagentpath  $linuxagentpath distro $distro "
 cd C:\DeploymentScripts_FC123_withPdu
 
@@ -15,13 +15,15 @@ cd C:\DeploymentScripts_FC123_withPdu
  $str_nodesip  -match '(?m)000.*-(.*).*'
 #00000000-0000-0000-0000-008cfa086314
 $nodeip=$Matches[1]
+
  net use /DELETE \\$nodeip
- net use \\$nodeip /user:rdTestUser rdPaSSw0rd!!
+ "net use \\$nodeip /user:rdTestUser $password"
+ net use \\$nodeip /user:rdTestUser $password
  if(-not $LASTEXITCODE -eq 0)
 {
  while($waitReady-- -gt 0)
 {
-  .\StartFCClient.cmd createuseraccount:$nodeid /username:rdTestUser /password:rdPaSSw0rd!! /expiration:30000 
+  .\StartFCClient.cmd createuseraccount:$nodeid /username:rdTestUser /password:$password /expiration:30000 
   if ($LASTEXITCODE -eq 0) {break};
   sleep 30;
   write-host "$(date) Wait for $nodeid ready"
