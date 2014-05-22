@@ -38,4 +38,9 @@ OSBlobName,ISOBlobName,TestName,TenantName
 $distro,linux_Certs_page.iso,PositiveTests,$distro.replace(".","")
 "
 Set-Content -Value $tests .\temp_data.csv
-.\RunTestsWithCSV.ps1 .\data2.csv
+#.\RunTestsWithCSV.ps1 .\data2.csv
+
+$results=dir $linuxagentpath\log |Sort-Object -Property LastWriteTime -Descending
+$result=($results[0],$results[1])|Sort-Object -Property Length
+cp -force $results[0] $linuxagentpath\log\summary.log
+cp -force $results[1] $linuxagentpath\log\test.log
