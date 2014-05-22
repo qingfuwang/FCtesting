@@ -12,7 +12,7 @@ cd C:\DeploymentScripts_FC123_withPdu
 #$nodeid="00000000-0000-0000-0000-008cfa086314"
  $output = .\StartFCClient.cmd nodeip? /node:$nodeid
  $str_nodesip=[System.String]::Join(";", $output);
- $str_nodesip  -match '(?m).*'+$nodeid+'- (.*);; .*'
+ $str_nodesip  -match '(?m).*'+$nodeid+' - (.*);; .*'
 $nodeip=$Matches[1]
 
  net use /DELETE \\$nodeip
