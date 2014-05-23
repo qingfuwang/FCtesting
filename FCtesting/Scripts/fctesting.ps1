@@ -1,7 +1,7 @@
 ﻿$linuxagentpath=$args[0]
 $distro=$args[1]
 $password=$args[2]
-echo "linuxagentpath  $linuxagentpath distro $distro "
+ write-host "linuxagentpath  $linuxagentpath distro $distro "
 cd C:\DeploymentScripts_FC123_withPdu
 
  $nodesinfo = .\StartFCClient.cmd nodes?;
@@ -28,6 +28,7 @@ $nodeip=$Matches[1]
 
 
 sc start RemoteAccess;
+sc query RemoteAccess;
 
 cd $linuxagentpath
 $tests = "
@@ -35,7 +36,7 @@ OSBlobName,ISOBlobName,TestName,TenantName
 $distro,linux_Certs_page.iso,PositiveTests,$distro.replace(".","")
 "
 Set-Content -Value $tests .\temp_data.csv
-.\RunTestsWithCSV.ps1 .\data2.csv
+.\RunTestsWithCSV.ps1 .\data2.csv >"$($(date).Ticks).log" 2>&1
 
 $results=dir $linuxagentpath\log |Sort-Object -Property LastWriteTime -Descending
 $results=($results[0],$results[1])|Sort-Object -Property Length
