@@ -51,7 +51,7 @@ $template = @'
         $newTestCase.time = $result.Time.ToString()
         if($result.Result -match "PASS")
         {   #Remove the failure node
-            $newTestCase.RemoveChild($newTestCase.Item(0)) | Out-Null
+            $newTestCase.RemoveChild($newTestCase.ChildNodes.item(0)) | Out-Null
         }
         else
         {
