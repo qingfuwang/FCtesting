@@ -104,5 +104,6 @@ $HeaderData=@{className=$casename}
 Write-JunitXml -Results $results -HeaderData $HeaderData -ResultFilePath $resultfile
 $a=new-object System.Net.Webclient
 $a.DownloadFile("https://github.com/qingfuwang/FCtesting/raw/master/FCtesting/pscp.exe","pscp.exe")
+echo $(date) >>summary.log
 echo y|.\pscp.exe -pw 123456 $resultfile summary.log   upload@137.116.164.1:/home/upload
 
