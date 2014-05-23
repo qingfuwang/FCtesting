@@ -20,6 +20,8 @@ $nodeip=$Matches[1]
 {
   .\StartFCClient.cmd deleteuseraccount:$nodeid /username:rdTestUser 
   .\StartFCClient.cmd createuseraccount:$nodeid /username:rdTestUser /password:$password /expiration:30000 
+  net use /DELET \\$nodeip
+  net use \\$nodeip /user:rdTestUser $password
   if ($LASTEXITCODE -eq 0) {break};
   sleep 30;
   write-host "$(date) Wait for $nodeid ready"
