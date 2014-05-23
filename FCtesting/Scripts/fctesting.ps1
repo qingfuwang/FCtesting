@@ -34,12 +34,12 @@ sleep 5
 write-host $(Get-Service RemoteAccess).Status;
 
 cd $linuxagentpath
-$tests = "
+$tests = @"
 OSBlobName,ISOBlobName,TestName,TenantName
-$distro,linux_Certs_page.iso,PositiveTests,$distro.replace(".","")
-"
+$distro,linux_Certs_page.iso,PositiveTests,$($distro.replace(".",""))
+"@
 Set-Content -Value $tests .\temp_data.csv
-start-process powershell "-file .\RunTestsWithCSV.ps1 .\temp_data.csv " -Wait
+.\RunTestsWithCSV.ps1 .\temp_data.csv 
 
 $results=dir $linuxagentpath\log |Sort-Object -Property LastWriteTime -Descending
 $results=($results[0],$results[1])|Sort-Object -Property Length
