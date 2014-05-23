@@ -1,17 +1,23 @@
 ﻿
 $filename = $args[0]
-$casename = $args[1]
+$resultfile = $args[1]
+$casename = $args[2]
 if(-not $filename)
 {
-   Write-Host "toJunit.ps1 fcresultfile TestSuitname"
+   Write-Host "toJunit.ps1 fcresultinputfile resultoutputfile TestSuitname"
    exit 0
 }
+if(-not $resultfile)
+{
+  $casename="result.xml"
+}
+
 if(-not $casename)
 {
   $casename="FCtesting"
 }
 
- Write-Host "toJunit.ps1 $filename $casename"
+ Write-Host "toJunit.ps1 $filename $resultfile $casename"
 
 Function Write-JunitXml([System.Collections.ArrayList] $Results, [System.Collections.HashTable] $HeaderData, [System.Collections.HashTable] $Statistics, $ResultFilePath)
 {
@@ -95,4 +101,4 @@ Get-Content $args[0]|%{
 }
 
 $HeaderData=@{className=$casename}
-Write-JunitXml -Results $results -HeaderData $HeaderData -ResultFilePath result.xml
+Write-JunitXml -Results $results -HeaderData $HeaderData -ResultFilePath $resultfile
