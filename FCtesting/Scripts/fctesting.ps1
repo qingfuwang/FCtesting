@@ -27,7 +27,7 @@ $nodeip=$Matches[1]
 };
 
 
-sc start RemoteAccess
+sc start RemoteAccess;
 
 cd $linuxagentpath
 $tests = "
