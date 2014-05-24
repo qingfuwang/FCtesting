@@ -1,6 +1,7 @@
 ﻿$linuxagentpath=$args[0]
 $distro=$args[1]
 $password=$args[2]
+$nodes = $args[3]
  write-host "linuxagentpath  $linuxagentpath distro $distro "
 cd C:\DeploymentScripts_FC123_withPdu
 
