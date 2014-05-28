@@ -29,7 +29,7 @@ $nodeip=$Matches[1]
   
 };
 
-
+Set-Service RemoteAccess -StartupType Automatic;
 Start-Service RemoteAccess;
 sleep 5
 write-host $(Get-Service RemoteAccess).Status;
