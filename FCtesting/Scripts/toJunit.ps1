@@ -46,7 +46,7 @@ $template = @'
     foreach($result in $Results) 
     {   
         $newTestCase = $newTestCaseTemplate.clone()
-        $newTestCase.classname = $className
+        $newTestCase.classname = $result.classname.ToString()
         $newTestCase.name = $result.Test.ToString()
         $newTestCase.time = $result.Time.ToString()
         if($result.Result -match "PASS")
@@ -81,21 +81,29 @@ TESTCASE Deprovision(a) - Fail
 [Array]$results=$();
 $lines=$sample.Split("`n");
 $lines|%{
+   $tenant=$casename
+   if($_ -match '.*TenantName=(.*)')
+   {
+      $tenant=$Matches[1];      
+   }
    if($_ -match 'TESTCASE (.*) - (.*)')
    {
       echo "$($Matches[1]) $($Matches[2])"
-      $results+=@{Test=$($Matches[1]);Time=-1;Result=$($Matches[2]);};
+      $results+=@{Test= $($Matches[1]);Time=-1;Result=$($Matches[2]);className=$tenant;};
    }
-
 }
 
 [Array]$results=$();
 
 Get-Content $args[0]|%{
+   if($_ -match '.*TenantName=(.*)')
+   {
+      $tenant=$Matches[1];    
+   }
    if($_ -match 'TESTCASE (.*) - (.*)')
    {
-      echo "$($Matches[1]) $($Matches[2])"
-      $results+=@{Test=$($Matches[1]);Time=-1;Result=$($Matches[2]);};
+      echo "$($Matches[1]) $($Matches[2]) $tenant"
+      $results+=@{Test= $($Matches[1]);Time=-1;Result=$($Matches[2]);className=$tenant;};
    }
 
 }
