@@ -1,7 +1,12 @@
 ﻿$linuxagentpath=$args[0]
-$distro=$args[1]
+$distroes=$args[1]
 $password=$args[2]
 $nodes = $args[3]
+$tests = $args[4]
+if(-not $tests)
+{
+  $tests="linux_Certs_page.iso,PositiveTests"
+}
  write-host "linuxagentpath  $linuxagentpath distro $distro "
 cd C:\DeploymentScripts_FC123_withPdu
 
@@ -33,13 +38,18 @@ Set-Service RemoteAccess -StartupType Automatic;
 Start-Service RemoteAccess;
 sleep 5
 write-host $(Get-Service RemoteAccess).Status;
-
 cd $linuxagentpath
-$tests = @"
-OSBlobName,ISOBlobName,TestName,TenantName
-$distro,linux_Certs_page.iso,PositiveTests,$($distro.replace(".",""))
-"@
-Set-Content -Value $tests .\temp_data.csv
+
+$tests.split(";")|%{ 
+$test=$_.trim();
+$distroes.split(";")|%{
+$distro= $_.trim();
+$testContent+= "$distro,$test,"+$distro.replace(".","")+"`r`n"
+}
+}
+
+Set-Content -Value "OSBlobName,ISOBlobName,TestName,TenantName`r`n$testContent" .\temp_data.csv
+
 .\RunTestsWithCSV.ps1 .\temp_data.csv 
 
 $results=dir $linuxagentpath\log |Sort-Object -Property LastWriteTime -Descending
