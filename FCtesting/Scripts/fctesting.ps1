@@ -1,8 +1,7 @@
 ﻿$linuxagentpath=$args[0]
 $distroes=$args[1]
 $password=$args[2]
-$nodes = $args[3]
-$tests = $args[4]
+$tests = $args[3]
 if(-not $tests)
 {
   $tests="linux_Certs_page.iso,PositiveTests"
