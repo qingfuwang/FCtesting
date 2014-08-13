@@ -1,0 +1,1 @@
+sed 's/Defaults    requiretty/#Defaults    requiretty/g' /etc/sudoers > /tmp/sudoers ;\cp -f  /tmp/sudoers  /etc/sudoers
